@@ -3,7 +3,6 @@ package com.example.config;
 import com.example.jwt.AuthEntryPointJwt;
 import com.example.jwt.AuthTokenFilter;
 import com.example.service.CustomerDetailsServiceImpl;
-import com.example.util.CustomerRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.dao.*;
