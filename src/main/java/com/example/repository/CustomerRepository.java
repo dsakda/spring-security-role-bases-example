@@ -10,4 +10,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query("SELECT c FROM Customer c WHERE c.username = :username")
     public Customer getCustomerByUsername(String username);
+
+    Boolean existsByUsername(String username);
 }
