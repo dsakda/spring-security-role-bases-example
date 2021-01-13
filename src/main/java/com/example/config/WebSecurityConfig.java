@@ -5,6 +5,7 @@ import com.example.jwt.AuthTokenFilter;
 import com.example.service.CustomerDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.*;
 import org.springframework.security.config.annotation.authentication.builders.*;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -39,6 +40,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
@@ -54,23 +61,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-/*        http.authorizeRequests()
-                .antMatchers("/").hasAnyAuthority(CustomerRole.USER.getRole(), CustomerRole.CREATOR.getRole(), CustomerRole.EDITOR.getRole(), CustomerRole.ADMIN.getRole())
-                .antMatchers("/new").hasAnyAuthority(CustomerRole.ADMIN.getRole(), CustomerRole.CREATOR.getRole())
-                .antMatchers("/edit/**").hasAnyAuthority(CustomerRole.ADMIN.getRole(), CustomerRole.EDITOR.getRole())
-                .antMatchers("/delete/**").hasAuthority(CustomerRole.ADMIN.getRole())
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll()
-                .and()
-                .logout().permitAll()
-                .and()
-                .exceptionHandling().accessDeniedPage("/403");*/
+//        http.authorizeRequests()
+//                .antMatchers("/").hasAnyAuthority(CustomerRole.USER.getRole(), CustomerRole.CREATOR.getRole(), CustomerRole.EDITOR.getRole(), CustomerRole.ADMIN.getRole())
+//                .antMatchers("/new").hasAnyAuthority(CustomerRole.ADMIN.getRole(), CustomerRole.CREATOR.getRole())
+//                .antMatchers("/edit/**").hasAnyAuthority(CustomerRole.ADMIN.getRole(), CustomerRole.EDITOR.getRole())
+//                .antMatchers("/delete/**").hasAuthority(CustomerRole.ADMIN.getRole())
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin().permitAll()
+//                .and()
+//                .logout().permitAll()
+//                .and()
+//                .exceptionHandling().accessDeniedPage("/403");
 
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+                .authorizeRequests().antMatchers("/api/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .anyRequest().authenticated();
 
