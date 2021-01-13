@@ -28,6 +28,10 @@ public class MyCustomerDetails implements UserDetails {
         return customer.getId();
     }
 
+    public String getEmail() {
+        return customer.getEmail();
+    }
+
     @Override
     public String getPassword() {
         return customer.getPassword();
