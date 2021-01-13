@@ -4,7 +4,6 @@ import com.example.jwt.JwtUtils;
 import com.example.model.JwtResponse;
 import com.example.model.LoginRequest;
 import com.example.model.MyCustomerDetails;
-import com.example.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
