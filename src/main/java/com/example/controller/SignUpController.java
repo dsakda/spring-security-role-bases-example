@@ -30,8 +30,7 @@ public class SignUpController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -40,10 +39,6 @@ public class SignUpController {
 
         List<String> roles = customerDetails.getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                customerDetails.getId(),
-                customerDetails.getUsername(),
-                "",
-                roles));
+        return ResponseEntity.ok(new JwtResponse(jwt, customerDetails.getId(), customerDetails.getUsername(), customerDetails.getEmail(), roles));
     }
 }
