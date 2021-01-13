@@ -26,6 +26,9 @@ public class Customer {
     private String password;
 
     @NotBlank
+    private String email;
+
+    @NotBlank
     private boolean enabled;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
