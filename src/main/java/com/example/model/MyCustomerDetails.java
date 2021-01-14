@@ -20,7 +20,9 @@ public class MyCustomerDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> roles = customer.getRoles();
-        List<SimpleGrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        List<SimpleGrantedAuthority> authorities = roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())) //***use "ROLE_" prefix
+                .collect(Collectors.toList());
         return authorities;
     }
 
