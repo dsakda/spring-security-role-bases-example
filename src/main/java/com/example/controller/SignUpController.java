@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 public class SignUpController {
 
     @Autowired
@@ -30,15 +30,16 @@ public class SignUpController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
 
         MyCustomerDetails customerDetails = (MyCustomerDetails) authentication.getPrincipal();
 
         List<String> roles = customerDetails.getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt, customerDetails.getId(), customerDetails.getUsername(), customerDetails.getEmail(), roles));
+        return ResponseEntity.ok(
+                new JwtResponse(jwtUtils.generateJwtToken(authentication), customerDetails.getId(), customerDetails.getUsername(), customerDetails.getEmail(), roles));
     }
 }
