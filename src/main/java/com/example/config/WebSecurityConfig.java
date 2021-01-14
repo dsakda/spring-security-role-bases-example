@@ -2,6 +2,7 @@ package com.example.config;
 
 import com.example.jwt.AuthEntryPointJwt;
 import com.example.jwt.AuthTokenFilter;
+import com.example.model.CustomerRole;
 import com.example.service.CustomerDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
